@@ -102,7 +102,7 @@
 1. Verify the cart contains the product(s)
 2. Review cart totals and click "Checkout" or "Proceed to Checkout" button
 3. Verify login is required; log in if prompted with:
-   - Email: `customer@practicesoftwaretesting.com`
+   - Email: `customer2@practicesoftwaretesting.com`
    - Password: `welcome01`
 4. Fill in the delivery/shipping address information (if required):
    - First Name

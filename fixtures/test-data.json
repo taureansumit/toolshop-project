@@ -1,0 +1,38 @@
+{
+  "users": {
+    "customer": {
+      "email": "admin@practicesoftwaretesting.com",
+      "password": "welcome01"
+    }
+  },
+  "products": {
+    "default": {
+      "name": "Combination Pliers",
+      "expectedPrice": "$14.15"
+    }
+  },
+  "shippingAddresses": {
+    "default": {
+      "country": "US",
+      "postalCode": "90210",
+      "houseNumber": "42",
+      "street": "Main Street",
+      "city": "Beverly Hills",
+      "state": "CA"
+    }
+  },
+  "cards": {
+    "validVisa": {
+      "number": "4111-1111-1111-1111",
+      "expiration": "12/2030",
+      "cvv": "123",
+      "holder": "Jane Doe"
+    }
+  },
+  "paymentMethods": {
+    "creditCard": "credit-card"
+  },
+  "expectedMessages": {
+    "paymentSuccess": "Payment was successful"
+  }
+}
