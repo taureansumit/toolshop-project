@@ -19,7 +19,7 @@ test.describe('MT-004 Checkout Flow', () => {
     const successMessage = testData.expectedMessages.paymentSuccess;
 
     await loginPage.login(email, password);
-    //adding a line to ensure logged in state.
+    //adding a sync line to ensure logged in state.
     await expect(page.getByRole('button', { name: 'John Doe' })).toBeVisible();
     await productPage.openProduct(name);
     await productPage.setQuantity(1);
