@@ -16,11 +16,20 @@
       "country": "US",
       "postalCode": "90210",
       "houseNumber": "42",
-      "street": "Main Street",
-      "city": "Beverly Hills",
-      "state": "CA"
+      "street": "Pietro Falls",
+      "city": "Elenormouth",
+      "state": "NE"
     }
   },
+  "billingAddress": {
+  "default": {
+    "billing_street": "Pietro Falls",
+    "billing_city": "Elenormouth",
+    "billing_state": "Nebraska",
+    "billing_country": "US",
+    "billing_postal_code": "90210"
+  }
+},
   "cards": {
     "validVisa": {
       "number": "4111-1111-1111-1111",
@@ -30,8 +39,16 @@
     }
   },
   "paymentMethods": {
-    "creditCard": "credit-card"
+    "creditCard": "credit-card",
+    "bankTransfer": "bank-transfer"
   },
+  "paymentDetails": {
+  "bankTransfer": {
+    "bank_name": "HSBC",
+    "account_name": "John Doe",
+    "account_number": "12345678"
+  }
+},
   "expectedMessages": {
     "paymentSuccess": "Payment was successful"
   }

@@ -131,3 +131,112 @@
 - Success message confirms the order was placed
 - Confirmation email message or option is presented
 - User is able to view order history or confirmation details
+
+---
+
+## API Test Case 1: Successful Login Returns Bearer Token
+
+**Test ID:** API-001  
+**Test Name:** Admin Login - Obtain Bearer Token  
+**Objective:** Verify that the admin can successfully authenticate via the API and receive an access token
+
+**Pre-conditions:**
+- API base URL is available: https://api.practicesoftwaretesting.com
+- Admin credentials are available: `admin@practicesoftwaretesting.com` / `welcome01`
+- Note: tokens issued by the API expire after 5 minutes (`expires_in: 300`)
+
+**Steps:**
+1. Send a POST request to `/users/login` with JSON body:
+   - `email`: `admin@practicesoftwaretesting.com`
+   - `password`: `welcome01`
+2. Observe the HTTP response status and body
+
+**Expected Result:**
+- Response status is `200 OK`
+- Response body contains:
+  - `access_token` as a non-empty string
+  - `token_type` equal to `bearer`
+  - `expires_in` equal to `300`
+- The `access_token` can be used in `Authorization: Bearer <token>` for subsequent protected requests
+
+---
+
+## API Test Case 2: Get Products List
+
+**Test ID:** API-002  
+**Test Name:** Retrieve Products List  
+**Objective:** Verify that the products endpoint returns a paginated list of products
+
+**Pre-conditions:**
+- API base URL is available: https://api.practicesoftwaretesting.com
+
+**Steps:**
+1. Send a GET request to `/products`
+2. Observe the HTTP response status and body
+
+**Expected Result:**
+- Response status is `200 OK`
+- Response body contains pagination metadata such as `current_page`, `data`, `from`, `last_page`, `per_page`, `to`, and `total`
+- The `data` array contains product objects with fields including `id`, `name`, `price`, and `in_stock`
+
+---
+
+## API Test Case 3: Create Cart and Add Product
+
+**Test ID:** API-003  
+**Test Name:** Create Cart and Add Product  
+**Objective:** Verify that a cart can be created and a product can be added to that cart via the API
+
+**Pre-conditions:**
+- API base URL is available: https://api.practicesoftwaretesting.com
+- A valid `product_id` exists (obtainable from `/products`)
+
+**Steps:**
+1. Send a POST request to `/carts` with an empty JSON body to create a new cart
+2. Capture the returned `id` from the response as `cartId`
+3. Send a POST request to `/carts/{cartId}` with JSON body:
+   - `product_id`: `<valid product id>`
+   - `quantity`: `1`
+4. Observe both HTTP responses and bodies
+
+**Expected Result:**
+- Cart creation response status is `201 Created`
+- Cart creation response body contains `id`
+- Add-to-cart response status is `200 OK`
+- Add-to-cart response body contains `result: 'item added or updated'`
+
+---
+
+**Expected Result:**
+- Response status is `201 Created`
+- Response body contains:
+  - `invoice_number` (format: `INV-YYYYNNNNNN`)
+  - `id` (invoice UUID)
+  - `subtotal` and `total` (numeric)
+  - `billing_street`, `billing_city`, `billing_state`, `billing_country`, `billing_postal_code` matching the request
+  - `invoice_date` and `created_at` timestamps
+  - `user_id` matching the authenticated user
+- Invoice is associated with the provided `cart_id` (verified via other endpoints if needed)
+
+**Note:** The response does not currently include `status`, `invoicelines`, or a nested `payment` object. This was verified against the live API. Documented as a finding — the API contract may differ from what a consumer might expect for a POST /invoices response.
+
+---
+
+## API Test Case 5: Access Protected Endpoint Without Token Returns 401
+
+**Test ID:** API-005  
+**Test Name:** Unauthorized Access to Protected Endpoint  
+**Objective:** Verify that accessing a protected endpoint without an Authorization token returns `401 Unauthorized`
+
+**Pre-conditions:**
+- API base URL is available: https://api.practicesoftwaretesting.com
+- No `Authorization` header will be sent with the request
+
+**Steps:**
+1. Send a POST request to `/invoices` WITHOUT including the `Authorization` header
+2. Observe the HTTP response status and body
+
+**Expected Result:**
+- Response status is `401 Unauthorized`
+- Response body contains an error message such as `Unauthorized`
+
